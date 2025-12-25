@@ -1,11 +1,56 @@
-@import 'tailwindcss';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
-@source '../../storage/framework/views/*.php';
-@source '../**/*.blade.php';
-@source '../**/*.js';
+/* Custom theme variables */
+:root {
+    --background: 0 0% 98%;
+    --foreground: 220 20% 15%;
+    --card: 0 0% 100%;
+    --card-foreground: 220 20% 15%;
+    --primary: 351 83% 49%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 220 14% 96%;
+    --secondary-foreground: 220 20% 15%;
+    --muted: 220 14% 96%;
+    --muted-foreground: 220 10% 45%;
+    --accent: 351 83% 95%;
+    --accent-foreground: 351 83% 40%;
+    --destructive: 0 84% 60%;
+    --success: 142 71% 45%;
+    --warning: 38 92% 50%;
+    --info: 199 89% 48%;
+    --border: 220 13% 91%;
+    --ring: 351 83% 49%;
+    --radius: 0.75rem;
 
-@theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+    --sidebar-background: 220 20% 15%;
+    --sidebar-foreground: 220 14% 96%;
+    --sidebar-accent: 220 15% 22%;
+}
+
+/* Fonts */
+.font-display {
+    font-family: 'Outfit', sans-serif;
+}
+
+.font-sans {
+    font-family: 'Inter', sans-serif;
+}
+
+/* Gradients */
+.gradient-primary {
+    background: linear-gradient(
+        135deg,
+        hsl(351, 83%, 49%) 0%,
+        hsl(351, 83%, 35%) 100%
+    );
+}
+
+.gradient-header {
+    background: linear-gradient(
+        90deg,
+        hsl(220, 20%, 15%) 0%,
+        hsl(220, 20%, 25%) 100%
+    );
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -13,12 +14,12 @@ class RoleMiddleware
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next, $role): Response
+     public function handle($request, Closure $next, ...$roles)
     {
-         if (!$request->user() || $request->user()->role !== $role) {
-            return response()->json([
-                'message' => 'Forbidden'
-            ], 403);
+        $user = Auth::user();
+
+        if (!$user || !in_array($user->role, $roles)) {
+            return redirect()->route('home')->with('error', 'Akses ditolak! Anda tidak memiliki izin untuk mengakses halaman tersebut!');
         }
 
         return $next($request);

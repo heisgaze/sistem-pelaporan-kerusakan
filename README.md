@@ -13,3 +13,12 @@
 ## bagian Sabila
 
 ## bagian Luthfi
+
+dialog.blade.php trigger.blade.php overlay.blade.php
+├── content.blade.php
+├── header.blade.php
+├── footer.blade.php
+├── title.blade.php
+├── description.blade.php
+├── action.blade.php
+└── cancel.blade.php
