@@ -9,7 +9,9 @@ class PenangananLaporan extends Model
     protected $table = 'penanganan_laporan';
 
     protected $fillable = [
-        
+        'laporan_id',
+        'admin_id',
+        'catatan_penanganan',
     ];
 
     public function laporan()
