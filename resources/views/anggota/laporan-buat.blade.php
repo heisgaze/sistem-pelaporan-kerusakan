@@ -39,13 +39,13 @@
                 <label for="deskripsi" class="text-sm font-medium text-foreground">Deskripsi Kerusakan</label>
                 <textarea 
                     id="deskripsi" 
-                    name="deskripsi"
+                    name="deskripsi_kerusakan"
                     rows="5"
                     class="w-full px-4 py-3 rounded-xl border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all resize-none @error('deskripsi') border-destructive @enderror"
                     placeholder="Jelaskan kerusakan secara detail..."
                     required
-                >{{ old('deskripsi') }}</textarea>
-                @error('deskripsi')
+                >{{ old('deskripsi_kerusakan') }}</textarea>
+                @error('deskripsi_kerusakan')
                     <p class="text-sm text-destructive">{{ $message }}</p>
                 @enderror
             </div>
@@ -56,7 +56,7 @@
                     <input 
                         type="file" 
                         id="foto" 
-                        name="foto"
+                        name="bukti_foto"
                         accept="image/*"
                         class="hidden"
                         onchange="previewImage(this)"
@@ -74,7 +74,7 @@
                         </div>
                     </label>
                 </div>
-                @error('foto')
+                @error('bukti_foto')
                     <p class="text-sm text-destructive">{{ $message }}</p>
                 @enderror
             </div>

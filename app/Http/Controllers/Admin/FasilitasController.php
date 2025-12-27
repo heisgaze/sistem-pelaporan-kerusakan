@@ -16,31 +16,26 @@ class FasilitasController extends Controller
 
     public function create()
     {
-        return view('admin.fasilitas.create');
+        
     }
 
     public function store(Request $request)
     {
-        
-
-        return redirect()->route('admin.fasilitas.store')->with('success', 'Fasilitas berhasil ditambahkan.');
+       
     }
 
     public function edit(Fasilitas $fasilitas)
     {
-        return view('admin.fasilitas.edit', ['fasilitas' => $fasilitas]);
+        
     }
 
-    public function update(Request $request, Fasilitas $fasilitas)
+    public function update(Request $request, Fasilitas $id)
     {
         
-
-        return redirect()->route('admin.fasilitas.index')->with('success', 'Fasilitas berhasil diperbarui.');
     }
 
-    public function destroy(Fasilitas $fasilitas)
+    public function destroy(Fasilitas $id)
     {
         
-        return redirect()->route('admin.fasilitas.index')->with('success', 'Fasilitas berhasil dihapus.');
     }
 }

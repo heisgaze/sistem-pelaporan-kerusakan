@@ -24,7 +24,7 @@ return new class extends Migration
 
             $table->text('deskripsi_kerusakan');
 
-            $table->enum('status', ['pending', 'diproses', 'selesai'])
+            $table->enum('status', ['pending', 'diproses', 'selesai', 'ditolak'])
                 ->default('pending');
 
             $table->string('bukti_foto')->nullable();

@@ -11,22 +11,19 @@ class AdminDashboardController extends Controller
 {
     public function index()
     {
-        $userId = Auth::id();
-
         // Statistik laporan user
         $stats = [
-            'total'    => LaporanKerusakan::where('user_id', $userId)->count(),
-            'pending'  => LaporanKerusakan::where('user_id', $userId)->where('status', 'pending')->count(),
-            'diproses' => LaporanKerusakan::where('user_id', $userId)->where('status', 'diproses')->count(),
-            'selesai'  => LaporanKerusakan::where('user_id', $userId)->where('status', 'selesai')->count(),
+            'total'    => LaporanKerusakan::count(),
+            'pending'  => LaporanKerusakan::where('status', 'pending')->count(),
+            'diproses' => LaporanKerusakan::where('status', 'diproses')->count(),
+            'selesai'  => LaporanKerusakan::where('status', 'selesai')->count(),
         ];
 
         // Laporan terbaru user
-        $recentReports = LaporanKerusakan::where('user_id', $userId)
-                            ->with('fasilitas')
-                            ->latest()
-                            ->take(5)
-                            ->get();
+        $recentReports = LaporanKerusakan::with(['user', 'fasilitas'])
+            ->latest()
+            ->take(5)
+            ->get();
 
         // Pengumuman aktif terbaru
         $announcements = Pengumuman::where('status', 'aktif')

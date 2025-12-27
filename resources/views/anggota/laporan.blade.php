@@ -40,11 +40,11 @@
                     @forelse($laporan as $report)
                         <tr class="hover:bg-muted/30 transition-colors">
                             <td class="px-6 py-4">
-                                <p class="font-medium text-foreground">{{ $report->fasilitas->nama }}</p>
+                                <p class="font-medium text-foreground">{{ $report->fasilitas->nama_fasilitas }}</p>
                                 <p class="text-sm text-muted-foreground">{{ $report->fasilitas->lokasi }}</p>
                             </td>
                             <td class="px-6 py-4">
-                                <p class="text-sm text-muted-foreground line-clamp-2 max-w-xs">{{ $report->deskripsi }}</p>
+                                <p class="text-sm text-muted-foreground line-clamp-2 max-w-xs">{{ $report->deskripsi_kerusakan }}</p>
                             </td>
                             <td class="px-6 py-4">
                                 <p class="text-sm text-muted-foreground">{{ $report->created_at->format('d M Y') }}</p>

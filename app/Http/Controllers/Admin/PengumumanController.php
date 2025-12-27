@@ -10,43 +10,31 @@ class PengumumanController extends Controller
 {
     public function index()
     {
-        $pengumuman = Pengumuman::latest()->paginate(10);
-        return view('admin.pengumuman', compact('pengumuman'));
+       
     }
 
     public function create()
     {
-        return view('admin.pengumuman.create');
+        
     }
 
     public function store(Request $request)
     {
-        
-
-        return redirect()->route('admin.pengumuman')
-            ->with('success', 'Pengumuman berhasil dibuat.');
+       
     }
 
-    public function edit(Pengumuman $pengumuman)
-    {
-
-
-        return view('admin.pengumuman.edit', compact('pengumuman'));
-    }
-
-    public function update(Request $request, Pengumuman $pengumuman)
+    public function edit(Pengumuman $id)
     {
         
-
-        return redirect()->route('admin.pengumuman.index')
-            ->with('success', 'Pengumuman berhasil diperbarui.');
     }
 
-    public function destroy(Pengumuman $pengumuman)
+    public function update(Request $request, Pengumuman $id)
     {
         
+    }
 
-        return redirect()->route('admin.pengumuman')
-            ->with('success', 'Pengumuman berhasil dihapus.');
+    public function destroy(Pengumuman $id)
+    {
+        
     }
 }

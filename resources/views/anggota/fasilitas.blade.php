@@ -56,9 +56,9 @@
                 </div>
                 <div class="p-5">
                     <div class="flex items-start justify-between mb-2">
-                        <h3 class="font-display font-bold text-foreground">{{ $item->nama }}</h3>
+                        <h3 class="font-display font-bold text-foreground">{{ $item->nama_fasilitas }}</h3>
                         <span class="px-2 py-1 rounded-lg bg-primary/10 text-primary text-xs font-medium">
-                            {{ $item->jenis }}
+                            {{ $item->jenis_fasilitas }}
                         </span>
                     </div>
                     <div class="flex items-center gap-2 text-sm text-muted-foreground mb-4">
@@ -69,7 +69,7 @@
                         <span>{{ $item->lokasi }}</span>
                     </div>
                     <a 
-                        href="{{ route('user.laporan.buat', ['fasilitas_id' => $item->id]) }}" 
+                        href="{{ route('anggota.laporan.buat', ['fasilitas_id' => $item->id]) }}" 
                         class="block w-full text-center gradient-primary text-white font-semibold py-2.5 rounded-xl hover:opacity-90 transition-all"
                     >
                         Laporkan Kerusakan

@@ -8,7 +8,7 @@
 <div class="max-w-4xl mx-auto space-y-6">
 
     <!-- Back Button -->
-    <a href="{{ route('admin.laporan.index') }}" 
+    <a href="{{ route('admin.laporan') }}" 
        class="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors">
         <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
@@ -23,9 +23,9 @@
 
             <div class="bg-card rounded-2xl border border-border shadow-sm overflow-hidden">
 
-                @if($laporan->foto)
+                @if($laporan->bukti_foto)
                     <div class="aspect-video bg-muted">
-                        <img src="{{ asset('storage/' . $laporan->foto) }}" 
+                        <img src="{{ asset('storage/' . $laporan->bukti_foto) }}" 
                              alt="Foto Kerusakan" 
                              class="w-full h-full object-cover">
                     </div>
@@ -36,7 +36,7 @@
                     <div class="flex items-start justify-between">
                         <div>
                             <h2 class="font-display font-bold text-xl text-foreground">
-                                {{ $laporan->fasilitas->nama }}
+                                {{ $laporan->fasilitas->nama_fasilitas }}
                             </h2>
 
                             <p class="text-muted-foreground flex items-center gap-2 mt-1">
@@ -55,7 +55,7 @@
 
                     <div>
                         <h3 class="font-medium text-foreground mb-2">Deskripsi Kerusakan</h3>
-                        <p class="text-muted-foreground">{{ $laporan->deskripsi }}</p>
+                        <p class="text-muted-foreground">{{ $laporan->deskripsi_kerusakan }}</p>
                     </div>
 
                     <div class="grid grid-cols-2 gap-4 text-sm pt-4 border-t border-border">
@@ -81,7 +81,7 @@
                 </div>
 
                 <div class="p-6">
-                    @if($laporan->penanganan->count() > 0)
+                    @if($laporan->penanganan->isNotEmpty())
                         <div class="space-y-4">
                             @foreach($laporan->penanganan as $penanganan)
                                 <div class="flex gap-4">
@@ -89,9 +89,6 @@
 
                                     <div class="flex-1 pb-4 {{ !$loop->last ? 'border-b border-border' : '' }}">
                                         <div class="flex items-center justify-between mb-1">
-                                            <p class="font-medium text-foreground">
-                                                {{ $penanganan->admin->name }}
-                                            </p>
                                             <p class="text-xs text-muted-foreground">
                                                 {{ $penanganan->created_at->format('d M Y, H:i') }}
                                             </p>
@@ -105,10 +102,12 @@
                             @endforeach
                         </div>
                     @else
-                        <p class="text-center text-muted-foreground py-4">Belum ada riwayat penanganan</p>
+                        <p class="text-center text-muted-foreground py-4">
+                            Belum ada riwayat penanganan
+                        </p>
                     @endif
+                    </div>
                 </div>
-            </div>
 
         </div>
 
@@ -121,9 +120,9 @@
                     <h3 class="font-display font-bold text-lg">Update Status</h3>
                 </div>
 
-                <form action="{{ route('admin.laporan.updateStatus', $laporan->id) }}" method="POST" class="p-6 space-y-4">
+                <form action="{{ route('admin.laporan.update', $laporan->id) }}" method="POST" class="p-6 space-y-4">
                     @csrf
-
+                    @method('PUT')
                     <label for="status" class="text-sm font-medium">Status</label>
                     <select id="status" name="status"
                         class="w-full px-4 py-3 rounded-xl border border-border bg-background"
@@ -131,7 +130,6 @@
                         <option value="pending"  {{ $laporan->status == 'pending' ? 'selected' : '' }}>Pending</option>
                         <option value="diproses" {{ $laporan->status == 'diproses' ? 'selected' : '' }}>Diproses</option>
                         <option value="selesai"  {{ $laporan->status == 'selesai' ? 'selected' : '' }}>Selesai</option>
-                        <option value="ditolak"  {{ $laporan->status == 'ditolak' ? 'selected' : '' }}>Ditolak</option>
                     </select>
 
                     <button type="submit" 
@@ -147,9 +145,8 @@
                     <h3 class="font-display font-bold text-lg">Tambah Catatan Penanganan</h3>
                 </div>
 
-                <form action="{{ route('admin.laporan.storeCatatan', $laporan->id) }}" method="POST" class="p-6 space-y-4">
-                    @csrf
-
+                <form action="{{ route('admin.laporan.catatan.store', $laporan->id) }}"  method="POST" class="p-6 space-y-4">
+                     @csrf
                     <textarea name="catatan_penanganan" rows="4"
                         class="w-full px-4 py-3 rounded-xl border border-border bg-background"
                         placeholder="Tambahkan catatan..." required></textarea>

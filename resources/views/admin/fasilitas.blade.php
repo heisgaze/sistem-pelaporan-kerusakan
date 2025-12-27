@@ -59,21 +59,26 @@
                                 </div>
                             </td>
                             <td class="px-6 py-4">
-                                <p class="font-medium text-foreground">{{ $item->nama }}</p>
+                                <p class="font-medium text-foreground">{{ $item->nama_fasilitas }}</p>
                             </td>
                             <td class="px-6 py-4">
                                 <p class="text-muted-foreground">{{ $item->lokasi }}</p>
                             </td>
                             <td class="px-6 py-4">
                                 <span class="px-2 py-1 rounded-lg bg-primary/10 text-primary text-xs font-medium">
-                                    {{ $item->jenis }}
+                                    {{ $item->jenis_fasilitas }}
                                 </span>
                             </td>
                             <td class="px-6 py-4 text-right">
                                 <div class="flex items-center justify-end gap-2">
                                     <button 
                                         type="button" 
-                                        onclick="openModal('edit', {{ json_encode($item) }})"
+                                        onclick="openModal('edit', {
+                                            id: '{{ $item->id }}',
+                                            nama_fasilitas: '{{ $item->nama_fasilitas }}',
+                                            lokasi: '{{ $item->lokasi }}',
+                                            jenis_fasilitas: '{{ $item->jenis_fasilitas }}'
+                                        })"
                                         class="p-2 text-muted-foreground hover:text-foreground transition-colors"
                                     >
                                         <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -133,7 +138,7 @@
                     <input 
                         type="text" 
                         id="nama" 
-                        name="nama"
+                        name="nama_fasilitas"
                         class="w-full px-4 py-3 rounded-xl border border-border bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
                         required
                     >
@@ -154,7 +159,7 @@
                     <label for="jenis" class="text-sm font-medium text-foreground">Jenis</label>
                     <select 
                         id="jenis" 
-                        name="jenis"
+                        name="jenis_fasilitas"
                         class="w-full px-4 py-3 rounded-xl border border-border bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
                         required
                     >
@@ -197,28 +202,36 @@ function openModal(mode, data = null) {
     const modal = document.getElementById('modal');
     const form = document.getElementById('modal-form');
     const title = document.getElementById('modal-title');
-    const method = document.getElementById('form-method');
+    const methodInput = form.querySelector('input[name="_method"]');
     
     if (mode === 'create') {
         title.textContent = 'Tambah Fasilitas';
         form.action = '{{ route("admin.fasilitas.store") }}';
-        method.value = 'POST';
-        form.reset();
+        form.querySelector('input[name="_method"]').value = 'POST';
+
+        document.getElementById('nama').value = '';
+        document.getElementById('lokasi').value = '';
+        document.getElementById('jenis').value = '';
+        document.getElementById('gambar').value = '';
+        
     } else {
         title.textContent = 'Edit Fasilitas';
-        form.action = `/admin/fasilitas/${data.id}`;
-        method.value = 'PUT';
-        document.getElementById('nama').value = data.nama;
+        form.action = `{{ url('admin/fasilitas') }}/${data.id}`;
+        form.querySelector('input[name="_method"]').value = 'PUT';
+
+        document.getElementById('nama').value = data.nama_fasilitas;
         document.getElementById('lokasi').value = data.lokasi;
-        document.getElementById('jenis').value = data.jenis;
+        document.getElementById('jenis').value = data.jenis_fasilitas;
+        document.getElementById('gambar').value = '';
     }
     
     modal.classList.remove('hidden');
-}
 
+    
+}
 function closeModal() {
     document.getElementById('modal').classList.add('hidden');
-}
+    }
 </script>
 @endpush
 @endsection

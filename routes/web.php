@@ -21,9 +21,7 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 // User Routes
 Route::middleware(['auth', 'role:anggota'])->prefix('anggota')->name('anggota.')->group(function () {
     Route::get('/dashboard', [AnggotaDashboardController::class, 'index'])->name('dashboard');
-    Route::get('/fasilitas', [DaftarFasilitasController::class, 'index'])->name('fasilitas');
-    
-    // Laporan Kerusakan CRUD
+ 
 });
 
 // Admin Routes
@@ -31,11 +29,11 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
     
     // Fasilitas CRUD
-    
+  
     
     // Laporan Management
-    
+   
     
     // Pengumuman CRUD
-    
+
 });

@@ -73,8 +73,8 @@
                     <a href="{{ route('anggota.laporan.show', $report->id) }}" class="block p-4 hover:bg-muted/50 transition-colors">
                         <div class="flex items-center justify-between">
                             <div>
-                                <p class="font-medium text-foreground">{{ $report->fasilitas->nama }}</p>
-                                <p class="text-sm text-muted-foreground mt-1 line-clamp-1">{{ $report->deskripsi }}</p>
+                                <p class="font-medium text-foreground">{{ $report->fasilitas->nama_fasilitas }}</p>
+                                <p class="text-sm text-muted-foreground mt-1 line-clamp-1">{{ $report->deskripsi_kerusakan }}</p>
                                 <p class="text-xs text-muted-foreground mt-2">{{ $report->created_at->diffForHumans() }}</p>
                             </div>
                             <x-status-badge :status="$report->status" />

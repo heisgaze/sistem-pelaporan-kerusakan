@@ -15,41 +15,32 @@ class PenangananLaporanController extends Controller
      */
     public function index()
     {
-        $laporan = LaporanKerusakan::with('fasilitas', 'user')
-            ->latest()
-            ->paginate(10);
-        
-        return view('admin.laporan', compact('laporan'));
+      
     }
 
     /**
      * Menampilkan detail laporan untuk dikelola (halaman kelola)
      */
-    public function kelola(LaporanKerusakan $laporan)
+
+    public function show(LaporanKerusakan $id)
     {
         
-        
-        return view('admin.laporan-kelola', compact('laporan'));
     }
 
     /**
      * Update status laporan
      */
-    public function updateStatus(Request $request, LaporanKerusakan $laporan)
+    public function update(Request $request, LaporanKerusakan $id)
     {
         
-
-        return back()->with('success', 'Status laporan berhasil diperbarui.');
     }
 
     /**
      * Tambah catatan penanganan
      */
-    public function storeCatatan(Request $request, LaporanKerusakan $laporan)
+    public function storeCatatan(Request $request, LaporanKerusakan $id)
     {
         
-
-        return back()->with('success', 'Catatan penanganan berhasil ditambahkan.');
     }
 
     /**
@@ -58,7 +49,5 @@ class PenangananLaporanController extends Controller
     public function destroyCatatan(PenangananLaporan $catatan)
     {
         
-        
-        return back()->with('success', 'Catatan berhasil dihapus.');
     }
 }
