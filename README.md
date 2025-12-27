@@ -8,7 +8,7 @@
 - create model user
 - create endpoint auth (register, login, logout)
 - bikin frontend dan authentication
-
+- CRUD Penanganan Laporan
 ## bagian Lola
 
 ## bagian Sabila
