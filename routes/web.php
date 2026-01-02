@@ -19,10 +19,16 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 // User Routes
-Route::middleware(['auth', 'role:anggota'])->prefix('anggota')->name('anggota.')->group(function () {
+    Route::middleware(['auth', 'role:anggota'])->prefix('anggota')->name('anggota.')->group(function () {
     Route::get('/dashboard', [AnggotaDashboardController::class, 'index'])->name('dashboard');
- 
+    Route::get('/fasilitas', [DaftarFasilitasController::class, 'index'])->name('fasilitas');
+    Route::get('/laporan/buat', [LaporanKerusakanController::class, 'create'])->name('laporan.buat');
+    Route::post('/laporan', [LaporanKerusakanController::class, 'store'])->name('laporan.store');
+    Route::get('/laporan', [LaporanKerusakanController::class, 'index'])->name('laporan');
+    Route::get('/laporan/{id}', [LaporanKerusakanController::class, 'show'])->name('laporan.show');
+    Route::delete('/laporan/{id}', [LaporanKerusakanController::class, 'destroy'])->name('laporan.destroy');
 });
+
 
 // Admin Routes
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
