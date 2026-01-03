@@ -12,6 +12,9 @@
 ## bagian Lola
 
 ## bagian Sabila
+- controller laporan kerusakan
+- model laporan kerusakan
+- routes laporan kerusakan
 
 ## bagian Luthfi
 
