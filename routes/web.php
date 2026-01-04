@@ -35,5 +35,8 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
    
     
     // Pengumuman CRUD
-
+    Route::get('/pengumuman', [PengumumanController::class, 'index'])->name('pengumuman');
+    Route::post('/pengumuman', [PengumumanController::class, 'store'])->name('pengumuman.store');
+    Route::put('/pengumuman/{id}', [PengumumanController::class, 'update'])->name('pengumuman.update');
+    Route::delete('/pengumuman/{id}', [PengumumanController::class, 'destroy'])->name('pengumuman.destroy');
 });
