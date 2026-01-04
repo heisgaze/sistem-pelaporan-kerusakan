@@ -17,4 +17,6 @@
 - routes laporan kerusakan
 
 ## bagian Luthfi
-
+- controller Pengumuman
+- model Pengumuman
+- routes Pengumuman
