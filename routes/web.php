@@ -29,7 +29,10 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
     
     // Fasilitas CRUD
-  
+    Route::get('/fasilitas', [FasilitasController::class, 'index'])->name('fasilitas');
+    Route::post('/fasilitas', [FasilitasController::class, 'store'])->name('fasilitas.store');
+    Route::put('/fasilitas/{id}', [FasilitasController::class, 'update'])->name('fasilitas.update');
+    Route::delete('/fasilitas/{id}', [FasilitasController::class, 'destroy'])->name('fasilitas.destroy');
     
     // Laporan Management
    
