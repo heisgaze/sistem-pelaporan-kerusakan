@@ -32,7 +32,11 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
   
     
     // Laporan Management
-   
+    Route::get('/laporan', [PenangananLaporanController::class, 'index'])->name('laporan');
+    Route::get('/laporan/{id}', [PenangananLaporanController::class, 'show'])->name('laporan.show');
+    Route::get('/laporan/{id}/kelola', [PenangananLaporanController::class, 'show'])->name('laporan.kelola');
+    Route::put('/laporan/{id}', [PenangananLaporanController::class, 'update'])->name('laporan.update');
+    Route::post('/laporan/{id}/catatan', [PenangananLaporanController::class, 'storeCatatan'])->name('laporan.catatan.store');
     
     // Pengumuman CRUD
 
