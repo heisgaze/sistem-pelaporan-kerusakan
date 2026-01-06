@@ -9,6 +9,7 @@ class LaporanKerusakan extends Model
     protected $table = 'laporan_kerusakan';
 
     protected $fillable = [
+        
         'user_id',
         'fasilitas_id',
         'deskripsi_kerusakan',

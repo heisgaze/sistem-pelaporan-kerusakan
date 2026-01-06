@@ -7,12 +7,24 @@
 - setup middleware
 - create model user
 - create endpoint auth (register, login, logout)
+<<<<<<< HEAD
 
+=======
+- bikin frontend dan authentication
+- CRUD Penanganan Laporan
+>>>>>>> de3c25605ce1117fdc12987892c0723a7b7c2baf
 ## bagian Lola
-
+- controller crud fasilitas
+- model crud fasilitas
+- routes crud fasilitas
+  
 ## bagian Sabila
+- controller laporan kerusakan
+- model laporan kerusakan
+- routes laporan kerusakan
 
 ## bagian Luthfi
+<<<<<<< HEAD
 
 dialog.blade.php trigger.blade.php overlay.blade.php
 ├── content.blade.php
@@ -22,3 +34,8 @@ dialog.blade.php trigger.blade.php overlay.blade.php
 ├── description.blade.php
 ├── action.blade.php
 └── cancel.blade.php
+=======
+- controller Pengumuman
+- model Pengumuman
+- routes Pengumuman
+>>>>>>> de3c25605ce1117fdc12987892c0723a7b7c2baf
