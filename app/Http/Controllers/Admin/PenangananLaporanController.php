@@ -15,7 +15,11 @@ class PenangananLaporanController extends Controller
      */
     public function index()
     {
-      
+        $laporan = LaporanKerusakan::with('fasilitas', 'user')
+            ->latest()
+            ->paginate(10);
+        
+        return view('admin.laporan', compact('laporan'));
     }
 
     /**
@@ -24,7 +28,9 @@ class PenangananLaporanController extends Controller
 
     public function show(LaporanKerusakan $id)
     {
-        
+        $laporan = $id;
+        $laporan->load('penanganan.admin', 'fasilitas', 'user');
+        return view('admin.laporan-kelola', compact('laporan'));
     }
 
     /**
@@ -32,7 +38,15 @@ class PenangananLaporanController extends Controller
      */
     public function update(Request $request, LaporanKerusakan $id)
     {
-        
+        $validated = $request->validate([
+            'status' => 'required|in:pending,diproses,selesai,ditolak'
+        ]);
+
+        $id->update([
+            'status' => $validated['status']
+        ]);
+
+        return back()->with('success', 'Status laporan berhasil diperbarui.');
     }
 
     /**
@@ -40,7 +54,17 @@ class PenangananLaporanController extends Controller
      */
     public function storeCatatan(Request $request, LaporanKerusakan $id)
     {
-        
+        $validated = $request->validate([
+            'catatan_penanganan' => 'required|min:5'
+        ]);
+
+        PenangananLaporan::create([
+            'laporan_id' => $id->id,
+            'admin_id' => Auth::id(),
+            'catatan_penanganan' => $validated['catatan_penanganan']
+        ]);
+
+        return back()->with('success', 'Catatan penanganan berhasil ditambahkan.');
     }
 
     /**
@@ -48,6 +72,8 @@ class PenangananLaporanController extends Controller
      */
     public function destroyCatatan(PenangananLaporan $catatan)
     {
+        $catatan->delete();
         
+        return back()->with('success', 'Catatan berhasil dihapus.');
     }
 }
