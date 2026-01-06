@@ -10,7 +10,10 @@
 - bikin frontend dan authentication
 - CRUD Penanganan Laporan
 ## bagian Lola
-
+- controller crud fasilitas
+- model crud fasilitas
+- routes crud fasilitas
+  
 ## bagian Sabila
 - controller laporan kerusakan
 - model laporan kerusakan
