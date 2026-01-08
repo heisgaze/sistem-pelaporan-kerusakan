@@ -1,3 +1,16 @@
+## ▶️ Langkah Menjalankan Project
+
+Ikuti langkah-langkah berikut **secara berurutan**.
+
+---
+
+### Masuk ke folder project
+```bash
+cd nama-folder-project
+
+
+
+
 # Progress
 ## bagian Galang 
 - setup laravel
