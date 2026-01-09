@@ -83,4 +83,21 @@ class PenangananLaporanController extends Controller
         
         return back()->with('success', 'Catatan berhasil dihapus.');
     }
+
+    /**
+     * Hapus laporan kerusakan (setelah selesai dikelola)
+     */
+    public function destroy(LaporanKerusakan $id)
+    {
+        // Hapus foto bukti jika ada
+        if ($id->bukti_foto) {
+            \Illuminate\Support\Facades\Storage::disk('public')->delete($id->bukti_foto);
+        }
+
+        // Hapus laporan (catatan penanganan akan terhapus otomatis karena cascade)
+        $id->delete();
+
+        return redirect()->route('admin.laporan')
+            ->with('success', 'Laporan berhasil dihapus.');
+    }
 }

@@ -158,6 +158,31 @@
                 </form>
             </div>
 
+            <!-- Hapus Laporan (hanya jika status selesai) -->
+            @if($laporan->status === 'selesai')
+            <div class="bg-card rounded-2xl border border-red-200 shadow-sm">
+                <div class="p-6 border-b border-red-200">
+                    <h3 class="font-display font-bold text-lg text-red-600">Hapus Laporan</h3>
+                </div>
+
+                <div class="p-6">
+                    <p class="text-sm text-muted-foreground mb-4">
+                        Laporan yang sudah selesai dapat dihapus. Tindakan ini tidak dapat dibatalkan.
+                    </p>
+                    
+                    <form action="{{ route('admin.laporan.destroy', $laporan->id) }}" method="POST" 
+                          onsubmit="return confirm('Apakah Anda yakin ingin menghapus laporan ini? Semua catatan penanganan juga akan dihapus.')">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" 
+                            class="w-full bg-red-600 hover:bg-red-700 text-white font-semibold py-3 px-4 rounded-xl shadow-lg transition-colors">
+                            Hapus Laporan
+                        </button>
+                    </form>
+                </div>
+            </div>
+            @endif
+
         </div>
 
     </div>
