@@ -61,6 +61,11 @@
                                         </svg>
                                     </a>
                                     @if($report->status === 'pending')
+                                        <a href="{{ route('anggota.laporan.edit', $report->id) }}" class="p-2 text-muted-foreground hover:text-foreground transition-colors" title="Edit">
+                                            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                                            </svg>
+                                        </a>
                                         <form action="{{ route('anggota.laporan.destroy', $report->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus laporan ini?')">
                                             @csrf
                                             @method('DELETE')

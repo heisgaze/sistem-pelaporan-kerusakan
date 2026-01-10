@@ -26,6 +26,8 @@ Route::middleware(['auth', 'role:anggota'])->prefix('anggota')->name('anggota.')
     Route::post('/laporan', [LaporanKerusakanController::class, 'store'])->name('laporan.store');
     Route::get('/laporan', [LaporanKerusakanController::class, 'index'])->name('laporan');
     Route::get('/laporan/{id}', [LaporanKerusakanController::class, 'show'])->name('laporan.show');
+    Route::get('/laporan/{id}/edit', [LaporanKerusakanController::class, 'edit'])->name('laporan.edit');
+    Route::put('/laporan/{id}', [LaporanKerusakanController::class, 'update'])->name('laporan.update');
     Route::delete('/laporan/{id}', [LaporanKerusakanController::class, 'destroy'])->name('laporan.destroy');
 });
 

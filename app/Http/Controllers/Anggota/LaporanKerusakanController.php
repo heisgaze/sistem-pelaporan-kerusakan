@@ -64,7 +64,8 @@ class LaporanKerusakanController extends Controller
         }
 
         $fasilitas = Fasilitas::all();
-        return view('anggota.laporan.edit', compact('id', 'fasilitas'));
+        $laporan = $id;
+        return view('anggota.laporan-edit', compact('laporan', 'fasilitas'));
     }
 
     public function update(Request $request, LaporanKerusakan $id)
@@ -92,7 +93,7 @@ class LaporanKerusakanController extends Controller
 
         $id->update($validated);
 
-        return redirect()->route('anggota.laporan.index')
+        return redirect()->route('anggota.laporan')
             ->with('success', 'Laporan berhasil diperbarui.');
     }
 
