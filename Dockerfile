@@ -34,6 +34,6 @@ EXPOSE ${PORT:-8080}
 CMD php artisan config:cache && \
     php artisan route:cache && \
     php artisan view:cache && \
-    php artisan migrate --force && \
+    (php artisan migrate --force || echo "WARN: migration failed, continuing app startup") && \
     (php artisan storage:link 2>/dev/null || true) && \
     php artisan serve --host=0.0.0.0 --port=${PORT:-8080}
