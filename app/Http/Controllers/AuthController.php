@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use App\Models\User;
 use Throwable;
@@ -34,6 +35,11 @@ class AuthController extends Controller
     // REGISTER
     public function register(Request $request)
     {
+        Log::error('AUTH_DEBUG Register hit', [
+            'email' => $request->input('email'),
+            ...$this->dbContext(),
+        ]);
+
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'unique:users,email'],
@@ -56,6 +62,8 @@ class AuthController extends Controller
             Log::error('AUTH_DEBUG Register success', [
                 'user_id' => $user->id,
                 'email' => $user->email,
+                'password_hash_check' => Hash::check($validated['password'], $user->password),
+                'password_length' => strlen((string) $user->password),
                 ...$this->dbContext(),
             ]);
         } catch (Throwable $e) {
@@ -90,6 +98,15 @@ class AuthController extends Controller
         $credentials = $request->validate([
             'email'    => ['required', 'email'],
             'password' => ['required'],
+        ]);
+
+        $user = User::query()->where('email', $credentials['email'])->first();
+        Log::error('AUTH_DEBUG Login probe', [
+            'email' => $credentials['email'],
+            'user_found' => (bool) $user,
+            'password_hash_check' => $user ? Hash::check($credentials['password'], (string) $user->password) : null,
+            'password_length' => $user ? strlen((string) $user->password) : null,
+            ...$this->dbContext(),
         ]);
 
         $remember = $request->boolean('remember');
