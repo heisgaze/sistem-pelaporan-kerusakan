@@ -57,5 +57,9 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
 });
 
 Route::get('/debug-users', function () {
-    return \Illuminate\Support\Facades\DB::table('users')->get();
+    return response()->json([
+        'driver' => \Illuminate\Support\Facades\DB::connection()->getDriverName(),
+        'database' => \Illuminate\Support\Facades\DB::connection()->getDatabaseName(),
+        'users' => \Illuminate\Support\Facades\DB::table('users')->get()
+    ]);
 });
