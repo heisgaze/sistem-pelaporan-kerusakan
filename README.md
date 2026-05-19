@@ -1,29 +1,3 @@
-<<<<<<< HEAD
-# Progress
-## bagian Galang 
-- setup laravel
-- setup sanctum (Token authorization)
-- setup database (migrations)
-- setup controller auth + test postman
-- setup middleware
-- create model user
-- create endpoint auth (register, login, logout)
-
-## bagian Lola
-
-## bagian Sabila
-
-## bagian Luthfi
-
-dialog.blade.php trigger.blade.php overlay.blade.php
-├── content.blade.php
-├── header.blade.php
-├── footer.blade.php
-├── title.blade.php
-├── description.blade.php
-├── action.blade.php
-└── cancel.blade.php
-=======
 # Sistem Pelaporan Kerusakan Fasilitas
 
 ---
@@ -42,7 +16,7 @@ dialog.blade.php trigger.blade.php overlay.blade.php
 ## Tech Stack
 
 | Kategori | Teknologi |
-|----------|-----------|
+|----------|-----------| 
 | Backend | PHP 8.4+, Laravel 12 |
 | Frontend | TailwindCSS 3.4, Alpine.js |
 | Database | MySQL |
@@ -63,7 +37,7 @@ Pastikan sistem  sudah terinstall:
 
 ---
 
-## Instalasi
+## Instalasi (Local Development)
 
 ### 1. Clone Repository
 
@@ -143,5 +117,47 @@ npm run dev
 
 Aplikasi akan tersedia di: **http://localhost:8000**
 
+---
 
->>>>>>> 0334eecb03c29d64b3d9216166c24217bfd80d36
+## Deploy ke Railway
+
+### 1. Push ke GitHub
+```bash
+git add .
+git commit -m "feat: add Railway deployment config"
+git push origin main
+```
+
+### 2. Buat Project di Railway
+1. Buka https://railway.app dan login dengan GitHub
+2. Klik **New Project** → **Deploy from GitHub repo**
+3. Pilih repository `sistem-pelaporan-kerusakan`
+
+### 3. Tambah MySQL Database
+1. Di dashboard Railway project, klik **+ New** → **Database** → **Add MySQL**
+2. Railway otomatis membuat database dan variabel environment
+
+### 4. Set Environment Variables
+Di tab **Variables** pada service app, tambahkan:
+
+```
+APP_NAME=LaporFasilitas
+APP_ENV=production
+APP_KEY=base64:GENERATE_BARU_DI_RAILWAY
+APP_DEBUG=false
+APP_URL=https://your-app.up.railway.app
+LOG_CHANNEL=stderr
+LOG_LEVEL=error
+DB_CONNECTION=mysql
+DB_HOST=${{MySQL.MYSQLHOST}}
+DB_PORT=${{MySQL.MYSQLPORT}}
+DB_DATABASE=${{MySQL.MYSQLDATABASE}}
+DB_USERNAME=${{MySQL.MYSQLUSER}}
+DB_PASSWORD=${{MySQL.MYSQLPASSWORD}}
+SESSION_DRIVER=database
+CACHE_STORE=database
+QUEUE_CONNECTION=sync
+```
+
+### 5. Deploy
+Railway akan otomatis build dan deploy. Cek tab **Deployments** untuk progress.
