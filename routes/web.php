@@ -58,16 +58,28 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
 
 Route::get('/debug-users', function () {
     try {
+        $email = 'direct' . time() . '@test.com';
         $user = \App\Models\User::create([
             'name' => 'Direct Create',
-            'email' => 'direct@test.com',
+            'email' => $email,
             'password' => \Illuminate\Support\Facades\Hash::make('password')
         ]);
+        
+        $attempt1 = \Illuminate\Support\Facades\Auth::attempt(['email' => $email, 'password' => 'password']);
+        
+        // Let's also try creating without Hash::make!
+        $email2 = 'direct2' . time() . '@test.com';
+        $user2 = \App\Models\User::create([
+            'name' => 'Direct Create 2',
+            'email' => $email2,
+            'password' => 'password'
+        ]);
+        
+        $attempt2 = \Illuminate\Support\Facades\Auth::attempt(['email' => $email2, 'password' => 'password']);
+        
         return response()->json([
-            'driver' => \Illuminate\Support\Facades\DB::connection()->getDriverName(),
-            'database' => \Illuminate\Support\Facades\DB::connection()->getDatabaseName(),
-            'created_user' => $user->toArray(),
-            'all_users' => \Illuminate\Support\Facades\DB::table('users')->get()
+            'attempt1_with_hash_make' => $attempt1,
+            'attempt2_without_hash_make' => $attempt2,
         ]);
     } catch (\Exception $e) {
         return response()->json(['error' => $e->getMessage()]);
