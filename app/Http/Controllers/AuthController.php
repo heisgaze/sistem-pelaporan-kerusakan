@@ -41,7 +41,7 @@ class AuthController extends Controller
         ]);
 
         try {
-            Log::info('Register attempt', [
+            Log::error('AUTH_DEBUG Register attempt', [
                 'email' => $validated['email'],
                 ...$this->dbContext(),
             ]);
@@ -53,13 +53,13 @@ class AuthController extends Controller
                 'password' => $validated['password'],
             ]);
 
-            Log::info('Register success', [
+            Log::error('AUTH_DEBUG Register success', [
                 'user_id' => $user->id,
                 'email' => $user->email,
                 ...$this->dbContext(),
             ]);
         } catch (Throwable $e) {
-            Log::error('Register failed', [
+            Log::error('AUTH_DEBUG Register failed', [
                 'email' => $request->input('email'),
                 'error' => $e->getMessage(),
                 ...$this->dbContext(),
@@ -106,7 +106,7 @@ class AuthController extends Controller
                 ->with('success', 'Login berhasil!');
         }
 
-        Log::warning('Login failed', [
+        Log::error('AUTH_DEBUG Login failed', [
             'email' => $credentials['email'],
             ...$this->dbContext(),
         ]);
