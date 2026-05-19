@@ -57,9 +57,19 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
 });
 
 Route::get('/debug-users', function () {
-    return response()->json([
-        'driver' => \Illuminate\Support\Facades\DB::connection()->getDriverName(),
-        'database' => \Illuminate\Support\Facades\DB::connection()->getDatabaseName(),
-        'users' => \Illuminate\Support\Facades\DB::table('users')->get()
-    ]);
+    try {
+        $user = \App\Models\User::create([
+            'name' => 'Direct Create',
+            'email' => 'direct@test.com',
+            'password' => \Illuminate\Support\Facades\Hash::make('password')
+        ]);
+        return response()->json([
+            'driver' => \Illuminate\Support\Facades\DB::connection()->getDriverName(),
+            'database' => \Illuminate\Support\Facades\DB::connection()->getDatabaseName(),
+            'created_user' => $user->toArray(),
+            'all_users' => \Illuminate\Support\Facades\DB::table('users')->get()
+        ]);
+    } catch (\Exception $e) {
+        return response()->json(['error' => $e->getMessage()]);
+    }
 });
