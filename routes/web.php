@@ -55,3 +55,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::put('/pengumuman/{id}', [PengumumanController::class, 'update'])->name('pengumuman.update');
     Route::delete('/pengumuman/{id}', [PengumumanController::class, 'destroy'])->name('pengumuman.destroy');
 });
+
+Route::get('/debug-users', function () {
+    return \Illuminate\Support\Facades\DB::table('users')->get();
+});
