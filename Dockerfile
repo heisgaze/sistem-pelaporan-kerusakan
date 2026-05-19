@@ -14,22 +14,14 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 WORKDIR /app
 
-# Copy composer files first (for caching)
-COPY composer.json composer.lock ./
-RUN composer install --no-dev --optimize-autoloader --no-interaction --no-scripts
-
-# Copy package files and build frontend
-COPY package.json package-lock.json ./
-RUN npm ci
-COPY vite.config.js tailwind.config.js postcss.config.js ./
-COPY resources/ resources/
-RUN npm run build
-
-# Copy the rest of the app
+# Copy everything first
 COPY . .
 
-# Re-run composer to trigger scripts
-RUN composer dump-autoload --optimize
+# Install PHP dependencies
+RUN composer install --no-dev --optimize-autoloader --no-interaction
+
+# Install Node dependencies and build frontend
+RUN npm ci && npm run build
 
 # Create storage directories
 RUN mkdir -p storage/framework/{sessions,views,cache} \
