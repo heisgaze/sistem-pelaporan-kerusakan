@@ -143,7 +143,7 @@ Di tab **Variables** pada service app, tambahkan:
 ```
 APP_NAME=LaporFasilitas
 APP_ENV=production
-APP_KEY=base64:GENERATE_BARU_DI_RAILWAY
+APP_KEY=base64:ISI_DENGAN_OUTPUT_php_artisan_key_generate_show
 APP_DEBUG=false
 APP_URL=https://your-app.up.railway.app
 LOG_CHANNEL=stderr
@@ -154,10 +154,31 @@ DB_PORT=${{MySQL.MYSQLPORT}}
 DB_DATABASE=${{MySQL.MYSQLDATABASE}}
 DB_USERNAME=${{MySQL.MYSQLUSER}}
 DB_PASSWORD=${{MySQL.MYSQLPASSWORD}}
-SESSION_DRIVER=database
+DB_URL=${{MySQL.MYSQL_URL}}
+SESSION_DRIVER=cookie
+SESSION_SECURE_COOKIE=true
+SESSION_SAME_SITE=lax
 CACHE_STORE=database
 QUEUE_CONNECTION=sync
 ```
 
+Catatan penting:
+- Pastikan nama service database benar saat menulis reference variable. Jika nama servicenya bukan `MySQL`, sesuaikan prefix-nya.
+- Wajib redeploy setelah ubah variables.
+- Jika `DB_CONNECTION` tidak terisi benar, Laravel bisa fallback ke SQLite di container (data register tidak masuk MySQL Railway dan bisa hilang saat restart).
+- Untuk cek cepat koneksi aktif, sementara set `APP_DEBUG=true`, redeploy, lalu buka endpoint `GET /debug-users` dan lihat `driver` + `database`.
+- Jika kena `419 Page Expired`, ganti `SESSION_DRIVER=cookie`, pastikan akses lewat `https://` domain app, lalu redeploy.
+
 ### 5. Deploy
 Railway akan otomatis build dan deploy. Cek tab **Deployments** untuk progress.
+
+### 6. Troubleshoot Register Tidak Tersimpan
+Jika register masih tidak masuk ke MySQL Railway:
+
+1. Buka service app di Railway -> **Logs**
+2. Lakukan 1x register
+3. Cari log:
+   - `Register attempt`
+   - `Register success` atau `Register failed`
+
+Log ini akan menampilkan `driver`, `host`, dan `database` yang benar-benar dipakai saat request.
