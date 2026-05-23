@@ -69,6 +69,10 @@ Route::get('/debug-users', function () {
                 ->select(['id', 'name', 'email', 'created_at'])
                 ->latest('id')
                 ->first(),
+        ])->withHeaders([
+            'Cache-Control' => 'no-cache, no-store, must-revalidate',
+            'Pragma' => 'no-cache',
+            'Expires' => '0',
         ]);
     } catch (\Throwable $e) {
         return response()->json([

@@ -32,6 +32,8 @@ class AuthController extends Controller
                 'connection' => \Illuminate\Support\Facades\DB::connection()->getName(),
                 'driver' => \Illuminate\Support\Facades\DB::connection()->getDriverName(),
                 'database' => \Illuminate\Support\Facades\DB::connection()->getDatabaseName(),
+                'host' => \Illuminate\Support\Facades\DB::connection()->getConfig('host'),
+                'port' => \Illuminate\Support\Facades\DB::connection()->getConfig('port'),
                 'user' => [
                     'id' => $user->id,
                     'name' => $user->name,
