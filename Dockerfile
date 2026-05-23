@@ -31,16 +31,11 @@ RUN mkdir -p storage/framework/{sessions,views,cache} \
 
 EXPOSE ${PORT:-8080}
 
-# Use stderr logging for Railway (logs visible in dashboard)
-# Use file cache and cookie session to avoid extra DB queries in production
+# Production defaults for Railway
 ENV LOG_CHANNEL=stderr \
     LOG_LEVEL=error \
     CACHE_STORE=file \
     SESSION_DRIVER=cookie
 
-CMD php artisan config:cache && \
-    php artisan route:cache && \
-    php artisan view:cache && \
-    (php artisan migrate --force || echo "WARN: migration failed, continuing app startup") && \
-    (php artisan storage:link 2>/dev/null || true) && \
-    php artisan serve --host=0.0.0.0 --port=${PORT:-8080}
+# Startup: migrate first, then cache config and serve
+CMD ["sh", "-c", "echo '=== Starting App ===' && echo \"DB_HOST=${DB_HOST:-not set}\" && echo \"DB_DATABASE=${DB_DATABASE:-not set}\" && php artisan migrate --force && php artisan config:cache && php artisan route:cache && php artisan view:cache && (php artisan storage:link 2>/dev/null || true) && echo '=== Server Starting ===' && php artisan serve --host=0.0.0.0 --port=${PORT:-8080}"]
