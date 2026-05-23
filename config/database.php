@@ -63,15 +63,11 @@ return [
             'prefix_indexes' => true,
             'strict' => true,
             'engine' => null,
-            'options' => extension_loaded('pdo_mysql') ? array_merge(
-                array_filter([
-                    (PHP_VERSION_ID >= 80500 ? \Pdo\Mysql::ATTR_SSL_CA : \PDO::MYSQL_ATTR_SSL_CA) => env('MYSQL_ATTR_SSL_CA'),
-                ]),
-                [
-                    (PHP_VERSION_ID >= 80500 ? \Pdo\Mysql::ATTR_SSL_VERIFY_SERVER_CERT : \PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT) => false,
-                    \PDO::ATTR_AUTOCOMMIT => true,
-                ]
-            ) : [],
+            'options' => [
+                \PDO::ATTR_AUTOCOMMIT => true,
+                \PDO::MYSQL_ATTR_INIT_COMMAND => 'SET autocommit=1',
+                (defined('PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT') ? \PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT : 1014) => false,
+            ],
         ],
 
         'mariadb' => [
