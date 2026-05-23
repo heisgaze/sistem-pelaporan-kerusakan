@@ -37,5 +37,5 @@ ENV LOG_CHANNEL=stderr \
     CACHE_STORE=file \
     SESSION_DRIVER=cookie
 
-# Startup: migrate first, then cache config and serve
-CMD ["sh", "-c", "echo '=== Starting App ===' && echo \"DB_HOST=${DB_HOST:-not set}\" && echo \"DB_DATABASE=${DB_DATABASE:-not set}\" && php artisan migrate --force && php artisan config:cache && php artisan route:cache && php artisan view:cache && (php artisan storage:link 2>/dev/null || true) && echo '=== Server Starting ===' && php artisan serve --host=0.0.0.0 --port=${PORT:-8080}"]
+# Startup: migrate first, then seed, then cache config and serve
+CMD ["sh", "-c", "echo '=== Starting App ===' && echo \"DB_HOST=${DB_HOST:-not set}\" && echo \"DB_DATABASE=${DB_DATABASE:-not set}\" && php artisan migrate --force && php artisan db:seed --force && php artisan config:cache && php artisan route:cache && php artisan view:cache && (php artisan storage:link 2>/dev/null || true) && echo '=== Server Starting ===' && php artisan serve --host=0.0.0.0 --port=${PORT:-8080}"]
