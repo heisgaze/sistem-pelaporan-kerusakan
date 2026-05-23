@@ -24,24 +24,28 @@ class AuthController extends Controller
             $user = User::create([
                 'name' => $validated['name'],
                 'email' => $validated['email'],
-                // User model sudah pakai cast "hashed" untuk password
                 'password' => $validated['password'],
             ]);
 
-            Log::info('User registered', ['user_id' => $user->id, 'email' => $user->email]);
-        } catch (Throwable $e) {
-            Log::error('Registration failed', [
-                'email' => $request->input('email'),
-                'error' => $e->getMessage(),
+            return response()->json([
+                'status' => 'success_created',
+                'connection' => \Illuminate\Support\Facades\DB::connection()->getName(),
+                'driver' => \Illuminate\Support\Facades\DB::connection()->getDriverName(),
+                'database' => \Illuminate\Support\Facades\DB::connection()->getDatabaseName(),
+                'user' => [
+                    'id' => $user->id,
+                    'name' => $user->name,
+                    'email' => $user->email,
+                    'role' => $user->role,
+                ]
             ]);
-
-            return back()
-                ->withInput($request->except(['password', 'password_confirmation']))
-                ->withErrors(['email' => 'Registrasi gagal karena masalah server. Coba lagi.']);
+        } catch (Throwable $e) {
+            return response()->json([
+                'status' => 'failed_catch',
+                'connection' => \Illuminate\Support\Facades\DB::connection()->getName(),
+                'error' => $e->getMessage(),
+            ], 500);
         }
-
-        return redirect('/login')->with('success', 'Registrasi berhasil, silakan login!');
-        
     }
 
     public function showRegister()
