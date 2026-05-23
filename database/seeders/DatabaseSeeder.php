@@ -6,6 +6,8 @@ use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
+use Illuminate\Support\Facades\Hash;
+
 class DatabaseSeeder extends Seeder
 {
     use WithoutModelEvents;
@@ -18,9 +20,10 @@ class DatabaseSeeder extends Seeder
         // User::factory(10)->create();
 
         if (!User::where('email', 'test@example.com')->exists()) {
-            User::factory()->create([
+            User::create([
                 'name' => 'Test',
                 'email' => 'test@example.com',
+                'password' => Hash::make('password'),
             ]);
         }
 
