@@ -56,27 +56,25 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::delete('/pengumuman/{id}', [PengumumanController::class, 'destroy'])->name('pengumuman.destroy');
 });
 
-if (app()->isLocal()) {
-    Route::get('/debug-users', function () {
-        try {
-            return response()->json([
-                'default_connection' => config('database.default'),
-                'driver' => \Illuminate\Support\Facades\DB::connection()->getDriverName(),
-                'database' => \Illuminate\Support\Facades\DB::connection()->getDatabaseName(),
-                'host' => config('database.connections.'.config('database.default').'.host'),
-                'port' => config('database.connections.'.config('database.default').'.port'),
-                'users_count' => \App\Models\User::count(),
-                'latest_user' => \App\Models\User::query()
-                    ->select(['id', 'name', 'email', 'created_at'])
-                    ->latest('id')
-                    ->first(),
-            ]);
-        } catch (\Throwable $e) {
-            return response()->json([
-                'default_connection' => config('database.default'),
-                'error' => $e->getMessage(),
-            ], 500);
-        }
-    });
-}
+Route::get('/debug-users', function () {
+    try {
+        return response()->json([
+            'default_connection' => config('database.default'),
+            'driver' => \Illuminate\Support\Facades\DB::connection()->getDriverName(),
+            'database' => \Illuminate\Support\Facades\DB::connection()->getDatabaseName(),
+            'host' => config('database.connections.'.config('database.default').'.host'),
+            'port' => config('database.connections.'.config('database.default').'.port'),
+            'users_count' => \App\Models\User::count(),
+            'latest_user' => \App\Models\User::query()
+                ->select(['id', 'name', 'email', 'created_at'])
+                ->latest('id')
+                ->first(),
+        ]);
+    } catch (\Throwable $e) {
+        return response()->json([
+            'default_connection' => config('database.default'),
+            'error' => $e->getMessage(),
+        ], 500);
+    }
+});
 
