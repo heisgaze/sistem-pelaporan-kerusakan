@@ -56,7 +56,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::delete('/pengumuman/{id}', [PengumumanController::class, 'destroy'])->name('pengumuman.destroy');
 });
 
-if (app()->isLocal() || config('app.debug')) {
+if (app()->isLocal()) {
     Route::get('/debug-users', function () {
         try {
             return response()->json([
@@ -79,3 +79,4 @@ if (app()->isLocal() || config('app.debug')) {
         }
     });
 }
+

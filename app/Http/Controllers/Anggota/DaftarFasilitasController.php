@@ -24,7 +24,5 @@ class DaftarFasilitasController extends Controller
     $fasilitas = \App\Models\Fasilitas::latest()->paginate(9);
 
     return view('anggota.fasilitas', compact('jenisOptions', 'fasilitas'));
-        // Implement the logic for displaying the list of facilities
-        return view('anggota.fasilitas', compact('jenisOptions'));
     }
 }

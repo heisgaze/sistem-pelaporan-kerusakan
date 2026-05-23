@@ -23,13 +23,20 @@ RUN composer install --no-dev --optimize-autoloader --no-interaction
 # Install Node dependencies and build frontend
 RUN npm ci && npm run build
 
-# Create storage directories
+# Create storage directories and set permissions
 RUN mkdir -p storage/framework/{sessions,views,cache} \
     && mkdir -p storage/logs \
     && mkdir -p bootstrap/cache \
     && chmod -R 775 storage bootstrap/cache
 
 EXPOSE ${PORT:-8080}
+
+# Use stderr logging for Railway (logs visible in dashboard)
+# Use file cache and cookie session to avoid extra DB queries in production
+ENV LOG_CHANNEL=stderr \
+    LOG_LEVEL=error \
+    CACHE_STORE=file \
+    SESSION_DRIVER=cookie
 
 CMD php artisan config:cache && \
     php artisan route:cache && \

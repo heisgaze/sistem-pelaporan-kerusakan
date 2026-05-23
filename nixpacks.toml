@@ -1,8 +1,12 @@
+[phases.setup]
+nixPkgs = ['...', 'php84']
+
 [phases.install]
 cmds = [
     'mkdir -p storage/framework/{sessions,views,cache}',
     'mkdir -p storage/logs',
     'mkdir -p bootstrap/cache',
+    'chmod -R 775 storage bootstrap/cache',
     'composer install --no-dev --optimize-autoloader --no-interaction',
     'npm ci',
     'npm run build',
