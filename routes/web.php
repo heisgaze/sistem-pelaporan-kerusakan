@@ -64,6 +64,7 @@ Route::get('/debug-users', function () {
             'database' => \Illuminate\Support\Facades\DB::connection()->getDatabaseName(),
             'host' => config('database.connections.'.config('database.default').'.host'),
             'port' => config('database.connections.'.config('database.default').'.port'),
+            'autocommit' => \Illuminate\Support\Facades\DB::select('SELECT @@autocommit')[0]->{'@@autocommit'} ?? null,
             'users_count' => \App\Models\User::count(),
             'raw_users_count' => \Illuminate\Support\Facades\DB::table('users')->count(),
             'tables' => \Illuminate\Support\Facades\DB::select('SHOW TABLES'),
