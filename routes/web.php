@@ -65,6 +65,9 @@ Route::get('/debug-users', function () {
             'host' => config('database.connections.'.config('database.default').'.host'),
             'port' => config('database.connections.'.config('database.default').'.port'),
             'users_count' => \App\Models\User::count(),
+            'raw_users_count' => \Illuminate\Support\Facades\DB::table('users')->count(),
+            'tables' => \Illuminate\Support\Facades\DB::select('SHOW TABLES'),
+            'raw_users' => \Illuminate\Support\Facades\DB::select('SELECT id, name, email, created_at FROM users'),
             'latest_user' => \App\Models\User::query()
                 ->select(['id', 'name', 'email', 'created_at'])
                 ->latest('id')
